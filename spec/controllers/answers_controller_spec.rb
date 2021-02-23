@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe AnswersController, type: :controller do
   let(:answer) { create(:answer) }
   let(:question) { create(:question) }
+  let(:user) { create(:user) }
 
   describe 'GET #show' do
     it 'renders show view' do
@@ -12,6 +13,8 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'GET #new' do
+    before { login(user) }
+
     it 'renders new view' do
       get :new, params: { question_id: question }
       expect(response).to render_template :new
@@ -19,6 +22,8 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'GET #edit' do
+    before { login(user) }
+
     it 'renders edit view' do
       get :edit, params: { id: answer }
       expect(response).to render_template :edit
@@ -26,6 +31,8 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'POST #create' do
+    before { login(user) }
+
     context 'with valid attributes' do
       it 'saves a new answer in the database' do
         expect do
@@ -35,7 +42,7 @@ RSpec.describe AnswersController, type: :controller do
       end
       it 'redirects to show view' do
         post :create, params: { question_id: question, answer: attributes_for(:answer) }
-        expect(response).to redirect_to assigns(:answer)
+        expect(response).to redirect_to assigns(:question)
       end
     end
 
@@ -48,12 +55,14 @@ RSpec.describe AnswersController, type: :controller do
       end
       it 're-renders new view' do
         post :create, params: { question_id: question, answer: attributes_for(:answer, :invalid) }
-        expect(response).to render_template :new, params: { question_id: question }
+        expect(response).to render_template 'questions/show'
       end
     end
   end
 
   describe 'PATCH #update' do
+    before { login(user) }
+
     context 'with valid attributes' do
       it 'assigns the requested answer to @answer' do
         patch :update, params: { id: answer, answer: attributes_for(:answer) }
@@ -75,9 +84,10 @@ RSpec.describe AnswersController, type: :controller do
       before { patch :update, params: { id: answer, answer: attributes_for(:answer, :invalid) } }
 
       it 'does not change answer' do
+        old_answer = answer.body
         answer.reload
 
-        expect(answer.body).to eq 'MyText'
+        expect(answer.body).to eq old_answer
       end
 
       it 're-renders edit view' do
@@ -87,6 +97,8 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'DELETE #destroy' do
+    before { login(user) }
+
     let!(:answer) { create(:answer) }
 
     it 'delete the answer' do
