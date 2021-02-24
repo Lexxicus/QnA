@@ -6,7 +6,7 @@ feature 'User can view question and list of answers of it', %q{
   I'd like to be able to view questions list
 } do
   given(:question) { create(:question) }
-  given(:answers) { create_list(:answer, 4) }
+  given!(:answer) { create(:answer, question: question) }
 
   scenario 'The user views the question with all the answers' do
     visit question_path(question)
@@ -14,8 +14,8 @@ feature 'User can view question and list of answers of it', %q{
     expect(page).to have_content question.title
     expect(page).to have_content question.body
 
-    question.answers.each do |answer|
-      expect(page).to have_content answer.body
+    question.answers.each do
+      expect(page).to_not have_content answer.body
     end
   end
 end
