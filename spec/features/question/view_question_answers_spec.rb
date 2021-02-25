@@ -15,7 +15,7 @@ feature 'User can view question and list of answers of it', %q{
     expect(page).to have_content question.body
 
     question.answers.each do
-      expect(page).to_not have_content answer.body
+      expect(page).to have_content answer.body
     end
   end
 end
