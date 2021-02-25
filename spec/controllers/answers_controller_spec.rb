@@ -97,7 +97,7 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'DELETE #destroy' do
-    context 'Authorized author' do
+    context 'author' do
       before { login(answer.user) }
 
       it 'deletes the answer' do
@@ -110,7 +110,7 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
 
-    context 'Authorized user' do
+    context 'non-author' do
       before { login(user) }
       let!(:answer) { create(:answer) }
 
