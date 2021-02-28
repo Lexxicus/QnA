@@ -1,18 +1,21 @@
 class QuestionsController < ApplicationController
+  before_action :authenticate_user!, except: %i[index show]
   def index
     @questions = Question.all
   end
 
-  def show; end
+  def show
+    @answer ||= question.answers.new
+  end
 
   def new; end
 
   def edit; end
 
   def create
-    @question = Question.new(question_params)
+    @question = current_user.questions.new(question_params)
     if @question.save
-      redirect_to @question
+      redirect_to @question, notice: 'Your question succeffully created.'
     else
       render :new
     end
@@ -27,8 +30,12 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    question.destroy
-    redirect_to questions_path
+    if current_user.author?(question)
+      question.destroy
+      redirect_to questions_path, notice: 'Your question successfully deleted!'
+    else
+      redirect_to question_path, error: 'You are not author of this answer'
+    end
   end
 
   private

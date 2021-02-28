@@ -1,4 +1,6 @@
 class AnswersController < ApplicationController
+  before_action :authenticate_user!, except: %i[show]
+
   def show; end
 
   def new; end
@@ -7,11 +9,12 @@ class AnswersController < ApplicationController
 
   def create
     @answer = question.answers.new(answer_params)
+    @answer.user = current_user
 
     if @answer.save
-      redirect_to @answer
+      redirect_to @answer.question, notice: 'Your answer added!!'
     else
-      render :new
+      render 'questions/show'
     end
   end
 
@@ -24,8 +27,12 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    answer.destroy
-    redirect_to answer.question
+    if current_user.author?(answer)
+      answer.destroy
+      redirect_to question_path(answer.question), notice: 'You successfully delete your answer.'
+    else
+      redirect_to question_path, error: "You cant't delete someone else's answer"
+    end
   end
 
   private
