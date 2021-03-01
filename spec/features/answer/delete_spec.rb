@@ -13,6 +13,7 @@ feature 'Author can delete his answer to question', %q{
     scenario 'delete his own answer' do
       sign_in(users.first)
       visit question_path(question)
+      expect(page).to have_content answer.body
       click_on 'Delete answer'
 
       expect(page).to have_content 'You successfully delete your answer.'

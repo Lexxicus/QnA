@@ -19,6 +19,7 @@ class AnswersController < ApplicationController
   end
 
   def update
+    @question = answer.question
     if answer.update(answer_params)
       redirect_to answer
     else
