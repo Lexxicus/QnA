@@ -8,7 +8,7 @@ feature 'User can create an answer to question', %q{
   given(:user) { create(:user) }
   given(:question) { create(:question) }
 
-  describe 'Authenticated user' do
+  describe 'Authenticated user', js: true do
     background do
       sign_in(user)
       visit question_path(question)
@@ -19,7 +19,6 @@ feature 'User can create an answer to question', %q{
       click_on 'Send answer'
 
       expect(current_path).to eq question_path(question)
-      expect(page).to have_content 'Your answer added!!'
       within '.answers' do
         expect(page).to have_content 'Answer body'
       end

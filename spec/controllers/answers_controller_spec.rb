@@ -37,12 +37,12 @@ RSpec.describe AnswersController, type: :controller do
       it 'saves a new answer in the database' do
         expect do
           post :create,
-               params: { question_id: question, answer: attributes_for(:answer) }
+               params: { question_id: question, answer: attributes_for(:answer) }, format: :js
         end.to change(question.answers, :count).by(1)
       end
-      it 'redirects to show view' do
-        post :create, params: { question_id: question, answer: attributes_for(:answer) }
-        expect(response).to redirect_to assigns(:question)
+      it 'render create view' do
+        post :create, params: { question_id: question, answer: attributes_for(:answer) }, format: :js
+        expect(response).to render_template :create
       end
     end
 
@@ -50,12 +50,12 @@ RSpec.describe AnswersController, type: :controller do
       it 'does not save the answer' do
         expect do
           post :create,
-               params: { question_id: question, answer: attributes_for(:answer, :invalid) }
+               params: { question_id: question, answer: attributes_for(:answer, :invalid) }, format: :js
         end.to_not change(Answer, :count)
       end
       it 're-renders new view' do
-        post :create, params: { question_id: question, answer: attributes_for(:answer, :invalid) }
-        expect(response).to render_template 'questions/show'
+        post :create, params: { question_id: question, answer: attributes_for(:answer, :invalid) }, format: :js
+        expect(response).to render_template :create
       end
     end
   end
@@ -69,28 +69,28 @@ RSpec.describe AnswersController, type: :controller do
         expect(assigns(:answer)).to eq answer
       end
       it 'changes answer attributes' do
-        patch :update, params: { id: answer, answer: { body: 'new body' } }
+        patch :update, params: { id: answer, answer: { body: 'new body' } }, format: :js
         answer.reload
-
         expect(answer.body).to eq 'new body'
       end
-      it 'redirects to updated question' do
-        patch :update, params: { id: answer, answer: attributes_for(:answer) }
-        expect(response).to redirect_to answer
+      it 'renders update view' do
+        patch :update, params: { id: answer, answer: { body: 'new body' } }, format: :js
+        expect(response).to render_template :update
       end
     end
 
     context 'with invalid attributes' do
-      before { patch :update, params: { id: answer, answer: attributes_for(:answer, :invalid) } }
+      before do
+        patch :update, params: { id: answer, answer: attributes_for(:answer, :invalid) }, format: :js
+      end
 
-      it 'does not change answer' do
+      it 'does not change answer attributes' do
         old_answer = answer.body
         answer.reload
-
         expect(answer.body).to eq old_answer
       end
 
-      it 're-renders edit view' do
+      it 'renders update view' do
         expect(response).to render_template :edit
       end
     end
