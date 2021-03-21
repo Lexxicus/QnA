@@ -1,17 +1,16 @@
-h1= question.title
+h2= question.title
 p= question.body
 
 - if current_user&.author?(question)
-  = link_to 'Delete question', question_path(question), method: :delete
+  .text-left
+    = link_to 'Edit question', edit_question_path(@question), class: 'btn btn-light'
+    = link_to 'Delete question', question_path(@question), method: :delete, class: 'btn btn-danger'
 
 .answers
-  = render @question.answers
+  = render 'answers/answers', best_answer: @best_answer, other_answers: @other_answers
 
 .answer-errors
   = render 'shared/errors', resource: @answer
 
 -if user_signed_in?
-  = form_with model: [question, @answer], local: false do |f|
-    = f.label :body, 'Create your answer'
-    = f.text_area :body
-    = f.submit 'Send answer'
+  = render 'answers/form'

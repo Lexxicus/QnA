@@ -11,7 +11,8 @@ FactoryBot.define do
     title
     body
     user
-    
+    best_answer_id { nil }
+
     trait :invalid do
       title { nil }
     end

@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-feature 'User can log out', %q{
+feature 'User can log out', "
   In order to log out
   As an authenticate user
   I'd like to be able to log out
-} do
+" do
   given(:user) { create(:user) }
 
   background { visit new_user_session_path }

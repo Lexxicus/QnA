@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-feature 'User can view question and list of answers of it', %q{
+feature 'User can view question and list of answers of it', "
   In order to find question
   As an user
   I'd like to be able to view questions list
-} do
+" do
   given(:question) { create(:question) }
   given!(:answer) { create(:answer, question: question) }
 

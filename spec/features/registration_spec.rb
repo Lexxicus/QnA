@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-feature 'User can register', %q{
+feature 'User can register', "
   In order to ask questions
   As an unregistred user
   I'd like to be able to register
-} do
+" do
   background { visit new_user_registration_path }
   scenario 'Unregistered user tries to register' do
     fill_in 'Email', with: 'user@test.com'
