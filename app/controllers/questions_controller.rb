@@ -1,11 +1,14 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
+  
   def index
     @questions = Question.all
   end
 
   def show
     @answer ||= question.answers.new
+    @best_answer = @question.best_answer
+    @other_answers = @question.answers.where.not(id: @question.best_answer_id)
   end
 
   def new; end

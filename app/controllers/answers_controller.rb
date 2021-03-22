@@ -1,5 +1,6 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, except: %i[show]
+  before_action :load_answers, only: %i[create update]
 
   def show; end
 
@@ -8,22 +9,14 @@ class AnswersController < ApplicationController
   def edit; end
 
   def create
+    @question = answer.question
     @answer = question.answers.new(answer_params)
     @answer.user = current_user
-
-    if @answer.save
-      redirect_to @answer.question, notice: 'Your answer added!!'
-    else
-      render 'questions/show'
-    end
+    @answer.save
   end
 
   def update
-    if answer.update(answer_params)
-      redirect_to answer
-    else
-      render :edit
-    end
+    answer.update(answer_params) if current_user.author?(answer)
   end
 
   def destroy
@@ -35,7 +28,20 @@ class AnswersController < ApplicationController
     end
   end
 
+  def mark_as_best
+    answer
+    @question = answer.question
+    @question.mark_as_best(answer) if current_user.author?(@question)
+    load_answers
+  end
+
   private
+
+  def load_answers
+    @question ||= params[:question_id] ? Question.find(params[:question_id]) : answer.question
+    @best_answer ||= @question.best_answer
+    @other_answers ||= @question.other_answers
+  end
 
   def answer
     @answer ||= params[:id] ? Answer.find(params[:id]) : Answer.new

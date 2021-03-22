@@ -1,0 +1,6 @@
+= form_with model: [question, @answer], local: false do |f|
+  = f.label :body, 'Create your answer'
+  br
+  = f.text_area :body, class: 'form-control'
+  br
+  = f.submit 'Send answer'

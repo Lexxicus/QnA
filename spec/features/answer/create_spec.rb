@@ -1,25 +1,27 @@
 require 'rails_helper'
 
-feature 'User can create an answer to question', %q{
+feature 'User can create an answer to question', "
   In order to help user
   As an authenticated user
   I'd like to be able to do answer the question
-} do
+" do
   given(:user) { create(:user) }
   given(:question) { create(:question) }
 
-  describe 'Authenticated user' do
+  describe 'Authenticated user', js: true do
     background do
       sign_in(user)
       visit question_path(question)
     end
 
     scenario 'give answer to question' do
-      fill_in 'Body', with: 'Answer body'
+      fill_in 'Create your answer', with: 'Answer body'
       click_on 'Send answer'
 
-      expect(page).to have_content 'Your answer added!!'
-      expect(page).to have_content 'Answer body'
+      expect(current_path).to eq question_path(question)
+      within '.answers' do
+        expect(page).to have_content 'Answer body'
+      end
     end
 
     scenario 'give answer to question with errors' do

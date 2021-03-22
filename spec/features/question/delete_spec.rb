@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-feature 'Author can delete his owen to question', %q{
+feature 'Author can delete his owen to question', "
   In order to delete question
   As an authenticated user and question author
   I'd like to be able to delete my question
-} do
+" do
   given(:users) { create_list(:user, 2) }
   given!(:question) { create(:question, user: users.first) }
 
