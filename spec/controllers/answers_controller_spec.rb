@@ -99,7 +99,10 @@ RSpec.describe AnswersController, type: :controller do
       before { login(user.last) }
 
       it "can't change it" do
-        expect { patch :update, params: { id: answer, answer: { body: 'new body' }, question_id: question }, format: :js }.to_not change(answer, :body)
+        expect do
+          patch :update, params: { id: answer, answer: { body: 'new body' }, question_id: question },
+                         format: :js
+        end.to_not change(answer, :body)
       end
 
       it 'renders show view' do

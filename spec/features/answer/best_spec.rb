@@ -5,7 +5,6 @@ feature 'Author of question can choose the best answer', "
   As an question author
   I'd like to be able to choose best answer
 " do
-
   given(:users) { create_list(:user, 2) }
   given!(:question) { create(:question, user: users.first) }
   given!(:answers) { create_list(:answer, 2, question: question, user: users.first) }
