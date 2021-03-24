@@ -1,6 +1,6 @@
 = render 'shared/errors', resource: @question
 
-= form_with(model:  question, local: true) do |f|
+= form_with model: question, local: true do |f|
   p
     = f.label :title
     = f.text_field :title, class: 'form-control'
@@ -10,5 +10,5 @@
   p = render 'attachments/attachments', resource: question, edit_path: true
   p
     = f.label :files
-    = f.file_field :files, multiple: true
+    = f.file_field :files, class: 'form-control-file', multiple: true, direct_upload: true
   p = f.submit 'Update', class: "actions btn  btn-sm btn-success"
