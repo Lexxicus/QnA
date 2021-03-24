@@ -15,4 +15,5 @@ p= question.body
   = render 'shared/errors', resource: @answer
 
 -if user_signed_in?
-  = render 'answers/form'
+  .new-answer
+    = render 'answers/form'

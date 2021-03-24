@@ -21,8 +21,8 @@ class AnswersController < ApplicationController
 
   def destroy
     if current_user.author?(answer)
+      question.update!(best_answer: nil) if question.best_answer == answer
       answer.destroy
-      redirect_to question_path(answer.question), notice: 'You successfully delete your answer.'
     else
       redirect_to question_path, error: "You cant't delete someone else's answer"
     end
@@ -38,22 +38,21 @@ class AnswersController < ApplicationController
   private
 
   def load_answers
-    @question ||= params[:question_id] ? Question.find(params[:question_id]) : answer.question
-    @best_answer ||= @question.best_answer
-    @other_answers ||= @question.other_answers
+    @best_answer ||= question.best_answer
+    @other_answers ||= question.other_answers
   end
 
   def answer
-    @answer ||= params[:id] ? Answer.find(params[:id]) : Answer.new
+    @answer ||= params[:id] ? Answer.with_attached_files.find(params[:id]) : Answer.new
   end
 
   def question
-    @question ||= Question.find(params[:question_id])
+    @question ||= params[:question_id] ? Question.find(params[:question_id]) : answer.question
   end
 
   helper_method :answer, :question
 
   def answer_params
-    params.require(:answer).permit(:body)
+    params.require(:answer).permit(:body, files: [])
   end
 end
