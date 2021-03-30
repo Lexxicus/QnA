@@ -3,6 +3,8 @@ Rails.application.routes.draw do
 
   root to: 'questions#index'
 
+  resources :attachments, only: %i[destroy]
+
   resources :questions do
     resources :answers, shallow: true do
       patch :mark_as_best, on: :member

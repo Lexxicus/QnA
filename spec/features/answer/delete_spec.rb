@@ -10,13 +10,12 @@ feature 'Author can delete his answer to question', "
   given!(:answer) { create(:answer, question: question, user: users.first) }
 
   describe 'Authenticated user' do
-    scenario 'delete his own answer' do
+    scenario 'delete his own answer', js: true do
       sign_in(users.first)
       visit question_path(question)
       expect(page).to have_content answer.body
       click_on 'Delete answer'
 
-      expect(page).to have_content 'You successfully delete your answer.'
       expect(page).to_not have_content answer.body
     end
 

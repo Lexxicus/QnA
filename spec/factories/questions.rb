@@ -16,5 +16,13 @@ FactoryBot.define do
     trait :invalid do
       title { nil }
     end
+
+    factory :question_with_file do
+      after(:create) do |question|
+        question.files.attach(io: File.open(Rails.root.join('spec', 'files', 'test.jpg')),
+                              filename: 'test.jpg',
+                              content_type: 'image/jpeg')
+      end
+    end
   end
 end
