@@ -11,12 +11,9 @@
     = f.label :files
     = f.file_field :files, class: 'form-control-file', multiple: true, direct_upload: true
   p Links :
-  p
-    = f.fields_for :links do |l|
-      p
-        = l.label :name, 'Link name'
-        = l.text_field :name
-      p
-       = l.label :url
-       = l.text_field :url
+  #links
+    = f.fields_for :links do |link|
+      = render 'shared/link_fields', f: link
+    .links
+      = link_to_add_association 'add link', f, :links, partial: 'shared/link_fields', class: 'btn btn-sm btn-success btn-block'
   p = f.submit 'Ask', class: 'btn btn-sm btn-primary btn-block'
