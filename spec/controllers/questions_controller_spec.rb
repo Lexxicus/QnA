@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
@@ -28,6 +30,10 @@ RSpec.describe QuestionsController, type: :controller do
     it 'assigns new answer for question' do
       expect(assigns(:answer)).to be_a_new(Answer)
     end
+
+    it 'assigns new link for answer' do
+      expect(assigns(:answer).links.first).to be_a_new(Link)
+    end
   end
 
   describe 'GET #new' do
@@ -37,6 +43,10 @@ RSpec.describe QuestionsController, type: :controller do
 
     it 'renders new view' do
       expect(response).to render_template :new
+    end
+
+    it 'assigns new Question to @question' do
+      expect(assigns(:question).links.first).to be_a_new(Link)
     end
   end
 

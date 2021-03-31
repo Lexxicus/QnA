@@ -1,6 +1,13 @@
 div class = "answer-#{answer.id}"
   p= answer.body
 
+  - if answer.links.present?
+    .links
+      p Links:
+      ul
+        - answer.links.each do |link|
+          li= link_to link.name, link.url
+
   = render 'attachments/attachments', resource: answer, edit_path: true
 
   - if current_user&.author?(answer.question) && @question.best_answer != answer

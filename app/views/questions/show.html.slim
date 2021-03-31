@@ -3,6 +3,13 @@ p= question.body
 
 = render 'attachments/attachments', resource: question, edit_path: false
 
+- if question.links.present?
+  .links
+    p Links:
+    ul
+      - question.links.each do |link|
+        li= link_to link.name, link.url
+
 - if current_user&.author?(question)
   .text-left
     = link_to 'Edit question', edit_question_path(@question), class: 'btn btn-light'
