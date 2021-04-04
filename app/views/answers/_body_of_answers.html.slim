@@ -1,14 +1,10 @@
 div class = "answer-#{answer.id}"
-  p= answer.body
+  p = answer.body
 
-  - if answer.links.present?
-    .links
-      p Links:
-      ul
-        - answer.links.each do |link|
-          li= link_to link.name, link.url
-
-  = render 'attachments/attachments', resource: answer, edit_path: true
+  p = render 'attachments/attachments', resource: answer, edit_path: true
+  p = render 'shared/link', resource: answer
+  - if best
+    = render 'rewards/reward', resource: answer.question.reward 
 
   - if current_user&.author?(answer.question) && @question.best_answer != answer
     = link_to 'Best', mark_as_best_answer_path(answer), id: "best_#{answer.id}", method: :patch, remote: true
@@ -25,4 +21,8 @@ div class = "answer-#{answer.id}"
       p  
         = f.label :files
         = f.file_field :files, class: 'form-control-file',multiple: true
+      p Links :
+      .links
+        = link_to_add_association 'add link', f, :links, partial: 'shared/link_fields', class: 'btn btn-sm btn-success'
+      
       p = f.submit 'Save'

@@ -1,14 +1,13 @@
-h2= question.title
-p= question.body
+h2 = question.title
+p = question.body
 
+.col-md-2.span.small
+  - if @question.reward
+      .small.text-center Reward for best answer:
+      = render 'rewards/reward', resource: @question.reward
 = render 'attachments/attachments', resource: question, edit_path: false
+= render 'shared/link', resource: question
 
-- if question.links.present?
-  .links
-    p Links:
-    ul
-      - question.links.each do |link|
-        li= link_to link.name, link.url
 
 - if current_user&.author?(question)
   .text-left

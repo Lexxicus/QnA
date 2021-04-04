@@ -1,19 +1,4 @@
-= render 'shared/errors', resource: question
-
-= form_with model: question, local: true do |f|
-  p
-    = f.label :title
-    = f.text_field :title, class: 'form-control'
-  p
-    = f.label :body
-    = f.text_area :body, class: 'form-control'
-  p
-    = f.label :files
-    = f.file_field :files, class: 'form-control-file', multiple: true, direct_upload: true
-  p Links :
-  #links
-    = f.fields_for :links do |link|
-      = render 'shared/link_fields', f: link
-    .links
-      = link_to_add_association 'add link', f, :links, partial: 'shared/link_fields', class: 'btn btn-sm btn-success btn-block'
-  p = f.submit 'Ask', class: 'btn btn-sm btn-primary btn-block'
+.card
+  .card-header
+    h1 Create question
+  = render 'questions/form'

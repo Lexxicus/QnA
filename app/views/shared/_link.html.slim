@@ -1,0 +1,6 @@
+  - resource.links.each do |link|
+    - if link.gist?
+      = link_to link.name, link.url, class: 'gist', data: {gist_file: "#{link.url}"}
+    - else
+      li
+        = link_to link.name, link.url

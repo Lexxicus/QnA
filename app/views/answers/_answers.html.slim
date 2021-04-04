@@ -3,7 +3,7 @@
     .col-sm-12
       .best_answer
         = content_tag :div, id: "answer_#{best_answer.id}", class: 'mt-3'
-          = render 'answers/body_of_answers', answer: @best_answer
+          = render 'answers/body_of_answers', answer: @best_answer, best: true
 
 - if other_answers.present?
   - other_answers.map do |answer|
@@ -11,4 +11,4 @@
       .row
         .col-sm-12
           .card
-            = render 'answers/body_of_answers', answer: answer
+            = render 'answers/body_of_answers', answer: answer, best: false

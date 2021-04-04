@@ -10,18 +10,29 @@ feature 'User can add links to question', "
   given(:user) { create(:user) }
   given(:gist_url) { 'https://gist.github.com/Lexxicus/208fbcecfbb1eb6cb5422a1eaf727c8c' }
 
-  scenario 'User adds link when asks question' do
+  background do
     sign_in(user)
     visit new_question_path
 
-    fill_in 'Title', with: 'Test question'
-    fill_in 'Body', with: 'test text text'
-
+    fill_in 'question[title]', with: 'Test question'
+    fill_in 'question[body]', with: 'test text text'
     fill_in 'Link name', with: 'My gist'
+  end
+
+  scenario 'User adds link when asks question' do
     fill_in 'Url', with: gist_url
 
     click_on 'Ask'
 
     expect(page).to have_link 'My gist', href: gist_url
+  end
+
+  scenario 'User adds invalid link when asks question' do
+    fill_in 'Url', with: 'fihsing_url.com'
+
+    click_on 'Ask'
+
+    expect(page).to have_content 'Links url is invalid'
+    expect(page).to_not have_link 'My gist', href: 'fihsing_url.com'
   end
 end

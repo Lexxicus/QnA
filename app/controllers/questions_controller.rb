@@ -58,6 +58,8 @@ class QuestionsController < ApplicationController
     params.require(:question).permit(:title,
                                      :body,
                                      files: [],
-                                     links_attributes: %i[id name url _destroy done])
+                                     links_attributes: %i[id name url _destroy done],
+                                     reward_attributes: %i[id title image]
+                                    )
   end
 end

@@ -7,6 +7,8 @@ Rails.application.routes.draw do
 
   resources :attachments, only: %i[destroy]
 
+  resources :rewards, only: %i[index]
+
   resources :questions do
     resources :answers, shallow: true do
       patch :mark_as_best, on: :member

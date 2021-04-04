@@ -1,7 +1,7 @@
 - if resource&.files.attached?
   p Files:
   - resource.files.each do |file|
-    div { id="attachment_#{file.id}" }
+    em{ id="attachment_#{file.id}" }
       p
         = link_to file.filename.to_s, url_for(file)
         - if current_user&.author?(resource)
