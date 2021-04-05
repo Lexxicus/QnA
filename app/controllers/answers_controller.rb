@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AnswersController < ApplicationController
   before_action :authenticate_user!, except: %i[show]
   before_action :load_answers, only: %i[create update]
@@ -53,6 +55,8 @@ class AnswersController < ApplicationController
   helper_method :answer, :question
 
   def answer_params
-    params.require(:answer).permit(:body, files: [])
+    params.require(:answer).permit(:body,
+                                   files: [],
+                                   links_attributes: %i[id name url _destroy done])
   end
 end

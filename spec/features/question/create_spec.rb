@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 feature 'User can create question', "
@@ -16,8 +18,8 @@ feature 'User can create question', "
     end
 
     scenario 'asks a question' do
-      fill_in 'Title', with: 'Test question'
-      fill_in 'Body', with: 'Text text text'
+      fill_in 'question[title]', with: 'Test question'
+      fill_in 'question[body]', with: 'Text text text'
       click_on 'Ask'
 
       expect(page).to have_content 'Your question succeffully created.'
@@ -32,8 +34,8 @@ feature 'User can create question', "
     end
 
     scenario 'asks a a question with attached file' do
-      fill_in 'Title', with: 'Test question'
-      fill_in 'Body', with: 'Text text text'
+      fill_in 'question[title]', with: 'Test question'
+      fill_in 'question[body]', with: 'Text text text'
 
       attach_file 'File', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
       click_on 'Ask'

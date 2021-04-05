@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
@@ -26,9 +28,11 @@ gem 'jbuilder', '~> 2.7'
 # gem 'image_processing', '~> 1.2'
 
 # Reduces boot times through caching; required in config/boot.rb
+gem 'active_storage_validations'
 gem 'aws-sdk-s3'
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'bootstrap'
+gem 'cocoon'
 gem 'devise'
 gem 'jquery-rails'
 gem 'slim-rails'

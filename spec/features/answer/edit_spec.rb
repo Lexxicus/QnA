@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 feature 'User can edit his answer', "
@@ -7,6 +9,7 @@ feature 'User can edit his answer', "
 " do
   given!(:user) { create(:user) }
   given!(:answer_with_file) { create(:answer_with_file) }
+  given(:url) { 'http://google.com' }
 
   scenario 'Unauthenticated can not adit answer' do
     visit question_path(answer_with_file.question)
@@ -55,6 +58,19 @@ feature 'User can edit his answer', "
       click_on(id: "delete-file-#{answer_with_file.files.first.id}")
 
       expect(page).to have_no_link answer_with_file.files.first.filename.to_s
+    end
+
+    scenario 'add links while edit answer', js: true do
+      within '.answers' do
+        click_on 'add link'
+
+        fill_in 'Link name', with: 'Google'
+        fill_in 'Url', with: url
+
+        click_on 'Save'
+      end
+
+      expect(page).to have_content 'Google'
     end
   end
 

@@ -1,14 +1,40 @@
-= render 'shared/errors', resource: @question
-
 = form_with model: question, local: true do |f|
-  p
-    = f.label :title
-    = f.text_field :title, class: 'form-control'
-  p
-    = f.label :body
-    = f.text_area :body, class: 'form-control'
-  p = render 'attachments/attachments', resource: question, edit_path: true
-  p
-    = f.label :files
-    = f.file_field :files, class: 'form-control-file', multiple: true, direct_upload: true
-  p = f.submit 'Update', class: "actions btn  btn-sm btn-success"
+  .card-body
+    = render 'shared/errors', resource: question
+    .question
+      div
+        = f.label :title
+        = f.text_field :title, class: 'form-control'
+      div
+        = f.label :body
+        = f.text_area :body, class: 'form-control'
+      .row
+        .col-6
+          hr
+          .reward
+            p Reward:
+            = render 'rewards/reward', resource: question.reward
+            = f.fields_for :reward, question.build_reward do |reward|
+              = render 'rewards/form', f: reward
+        .col-6
+            hr
+            = render 'attachments/attachments', resource: question, edit_path: true
+            = f.label :files
+            = f.file_field :files, class: 'form-control-file', multiple: true, direct_upload: true
+
+    div
+      hr
+      .row
+        .col-6
+          p Links :
+          = f.fields_for :links do |link|
+            = render 'shared/link_fields', f: link
+          .links
+            = link_to_add_association 'add link', f, :links, partial: 'shared/link_fields', class: 'btn btn-sm btn-success'
+    
+  .card-footer
+    = f.submit 'Ask', class: "actions btn  btn-sm btn-primary"
+    - if question.new_record?
+      = link_to "Back", questions_path, class: 'btn btn-sm btn-secondary '
+    - else
+      = link_to "Back", question, class: 'btn btn-sm btn-secondary '

@@ -1,8 +1,11 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
   let(:user) { create(:user) }
   let(:question) { create(:question) }
+  let(:reward) { create(:reward, question: question) }
 
   describe 'GET #index' do
     let(:questions) { create_list(:question, 3) }
@@ -28,6 +31,10 @@ RSpec.describe QuestionsController, type: :controller do
     it 'assigns new answer for question' do
       expect(assigns(:answer)).to be_a_new(Answer)
     end
+
+    it 'assigns new link for answer' do
+      expect(assigns(:answer).links.first).to be_a_new(Link)
+    end
   end
 
   describe 'GET #new' do
@@ -37,6 +44,10 @@ RSpec.describe QuestionsController, type: :controller do
 
     it 'renders new view' do
       expect(response).to render_template :new
+    end
+
+    it 'assigns a new link to @link' do
+      expect(assigns(:question).links.first).to be_a_new(Link)
     end
   end
 

@@ -1,3 +1,4 @@
 tr class="answer"
-  td= link_to question.title, question
-  td= question.body
+  td = link_to question.title, question
+  td = question.body
+  td = question.reward.title if question.reward.present?
