@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class QuestionsController < ApplicationController
+  include Voted
+  
   before_action :authenticate_user!, except: %i[index show]
 
   def index
@@ -59,7 +61,6 @@ class QuestionsController < ApplicationController
                                      :body,
                                      files: [],
                                      links_attributes: %i[id name url _destroy done],
-                                     reward_attributes: %i[id title image]
-                                    )
+                                     reward_attributes: %i[id title image])
   end
 end

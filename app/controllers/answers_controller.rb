@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class AnswersController < ApplicationController
+  include Voted
+
   before_action :authenticate_user!, except: %i[show]
   before_action :load_answers, only: %i[create update]
 
@@ -14,14 +16,7 @@ class AnswersController < ApplicationController
     @question = answer.question
     @answer = question.answers.new(answer_params)
     @answer.user = current_user
-
-    respond_to do |format|
-      if @answer.save
-        format.json { render json: @answer }
-      else
-        format.json { render json: @answer.errors.full_messages, status: :unprocessable_entity }
-      end
-    end
+    @answer.save
   end
 
   def update

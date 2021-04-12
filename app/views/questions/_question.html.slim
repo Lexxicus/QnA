@@ -1,4 +1,5 @@
 tr class="answer"
   td = link_to question.title, question
   td = question.body
-  td = question.reward.title if question.reward.present?
+  td = image_tag url_for(question.reward.image), size: "30", alt: "#{question.reward.image.filename}" if question.reward.present?
+  td = question.rating

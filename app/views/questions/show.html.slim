@@ -1,11 +1,15 @@
 h2 = question.title
 p = question.body
 
+= render 'shared/vote', resource: question
+
 .col-md-2.span.small
   - if @question.reward
       .small.text-center Reward for best answer:
       = render 'rewards/reward', resource: @question.reward
+
 = render 'attachments/attachments', resource: question, edit_path: false
+
 = render 'shared/link', resource: question
 
 

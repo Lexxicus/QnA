@@ -10,7 +10,7 @@ feature 'User can edit his question', "
   given!(:user) { create(:user) }
   given!(:question_with_file) { create(:question_with_file) }
   given(:url) { 'https://google.com' }
-  given(:question_with_links) {create(:question_with_links)}
+  given(:question_with_links) { create(:question_with_links) }
 
   scenario 'Unauthenticated can not edit question' do
     visit question_path(question_with_file)

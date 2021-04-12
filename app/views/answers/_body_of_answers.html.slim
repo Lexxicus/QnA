@@ -1,6 +1,7 @@
 div class = "answer-#{answer.id}"
   p = answer.body
 
+  p = render 'shared/vote', resource: answer
   p = render 'attachments/attachments', resource: answer, edit_path: true
   p = render 'shared/link', resource: answer
   - if best
