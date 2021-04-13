@@ -1,11 +1,18 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require_relative './concerns/voted'
 
 RSpec.describe QuestionsController, type: :controller do
   let(:user) { create(:user) }
   let(:question) { create(:question) }
   let(:reward) { create(:reward, question: question) }
+
+  it_behaves_like 'voted' do
+    let!(:other_user) { create(:user) }
+    let(:test_user) { create(:user) }
+    let(:voted) { create(:question, user: other_user) }
+  end
 
   describe 'GET #index' do
     let(:questions) { create_list(:question, 3) }

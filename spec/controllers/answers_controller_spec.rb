@@ -1,11 +1,19 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require_relative './concerns/voted'
 
 RSpec.describe AnswersController, type: :controller do
   let!(:user) { create_list(:user, 2) }
   let!(:question) { create(:question, user: user.first) }
   let!(:answer) { create(:answer, question: question, user: user.first) }
+
+  it_behaves_like 'voted' do
+    let!(:other_user) { create(:user) }
+    let(:test_user) { create(:user) }
+    let(:question) { create(:question, user: other_user) }
+    let(:voted) { create(:answer, question: question, user: other_user) }
+  end
 
   describe 'GET #show' do
     it 'renders show view' do

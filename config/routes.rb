@@ -5,12 +5,19 @@ Rails.application.routes.draw do
 
   root to: 'questions#index'
 
+  concern :voted do
+    member do
+      patch :vote_up
+      patch :vote_down
+    end
+  end
+
   resources :attachments, only: %i[destroy]
 
   resources :rewards, only: %i[index]
 
-  resources :questions do
-    resources :answers, shallow: true do
+  resources :questions, concerns: [:voted] do
+    resources :answers, concerns: [:voted], shallow: true do
       patch :mark_as_best, on: :member
     end
   end

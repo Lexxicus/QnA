@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class QuestionsController < ApplicationController
+  include Voted
+  
   before_action :authenticate_user!, except: %i[index show]
 
   def index
@@ -11,7 +13,7 @@ class QuestionsController < ApplicationController
     @answer = Answer.new
     @answer.links.new
     @best_answer = question.best_answer
-    @other_answers = question.answers.where.not(id: @question.best_answer_id)
+    @other_answers = question.other_answers
   end
 
   def new
@@ -59,7 +61,6 @@ class QuestionsController < ApplicationController
                                      :body,
                                      files: [],
                                      links_attributes: %i[id name url _destroy done],
-                                     reward_attributes: %i[id title image]
-                                    )
+                                     reward_attributes: %i[id title image])
   end
 end
