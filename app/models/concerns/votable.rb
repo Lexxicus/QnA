@@ -8,7 +8,7 @@ module Votable
   end
 
   def rating
-    votes.pluck(:vote).sum
+    votes.sum(:vote)
   end
 
   def vote_up(user)
