@@ -35,6 +35,7 @@ gem 'bootstrap'
 gem 'cocoon'
 gem 'devise'
 gem 'gon'
+gem 'handlebars_assets'
 gem 'jquery-rails'
 gem 'slim-rails'
 

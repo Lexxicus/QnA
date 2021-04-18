@@ -15,6 +15,7 @@ class QuestionsController < ApplicationController
     @answer.links.new
     @best_answer = question.best_answer
     @other_answers = question.other_answers
+    set_gon
   end
 
   def new
@@ -51,6 +52,11 @@ class QuestionsController < ApplicationController
 
   private
 
+  def set_gon
+    gon.question_id = @question.id
+    gon.current_user_id = current_user&.id
+  end
+
   def publish_question
     return if @question.errors.any?
 
@@ -59,7 +65,7 @@ class QuestionsController < ApplicationController
       ApplicationController.render(
         partial: 'questions/question',
         locals: {
-          question: @question,
+          question: @question
         }
       )
     )

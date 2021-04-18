@@ -31,6 +31,31 @@ feature 'User can create an answer to question', "
 
       expect(page).to have_content "Body can't be blank"
     end
+
+    describe 'multiple sessions' do
+      scenario 'all users see new answer in real-time', js: true do
+        Capybara.using_session('user') do
+          sign_in(user)
+          visit question_path(question)
+        end
+
+        Capybara.using_session('another_user') do
+          visit question_path(question)
+        end
+
+        Capybara.using_session('user') do
+          fill_in 'Create your answer', with: 'Answer body'
+          click_on 'Send answer'
+          within '.answers' do
+            expect(page).to have_content 'Answer body'
+          end
+        end
+
+        Capybara.using_session('another_user') do
+          expect(page).to have_content 'Answer body'
+        end
+      end
+    end
   end
 
   scenario 'Unauthenticated user tries to ask a question' do
