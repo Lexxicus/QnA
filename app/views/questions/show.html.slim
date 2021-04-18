@@ -12,7 +12,6 @@ p = question.body
 
 = render 'shared/link', resource: question
 
-
 - if current_user&.author?(question)
   .text-left
     = link_to 'Edit question', edit_question_path(@question), class: 'btn btn-light'

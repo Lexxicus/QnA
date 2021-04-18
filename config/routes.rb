@@ -21,4 +21,6 @@ Rails.application.routes.draw do
       patch :mark_as_best, on: :member
     end
   end
+
+  mount ActionCable.server => '/cable'
 end

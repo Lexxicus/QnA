@@ -43,6 +43,36 @@ feature 'User can create question', "
       expect(page).to have_link 'rails_helper.rb'
       expect(page).to have_link 'spec_helper.rb'
     end
+
+    context 'multiple sessions ' do
+      scenario 'question added on another user`s page', js: true do
+        Capybara.using_session('user') do
+          sign_in(user)
+          visit questions_path
+        end
+
+        Capybara.using_session('another_user') do
+          visit questions_path
+        end
+
+        Capybara.using_session('user') do
+          click_on 'Ask question'
+          fill_in 'question[title]', with: 'Test question'
+          fill_in 'question[body]', with: 'Question body'
+          click_on 'Ask'
+
+          expect(page).to have_content 'Your question succeffully created.'
+          expect(page).to have_content 'Test question'
+          expect(page).to have_content 'Question body'
+        end
+
+        Capybara.using_session('another_user') do
+          visit questions_path
+
+          expect(page).to have_content 'Test question'
+        end
+      end
+    end
   end
 
   scenario 'Unauthenticated user tries to ask a question' do

@@ -34,6 +34,7 @@ gem 'bootsnap', '>= 1.4.2', require: false
 gem 'bootstrap'
 gem 'cocoon'
 gem 'devise'
+gem 'gon'
 gem 'jquery-rails'
 gem 'slim-rails'
 
