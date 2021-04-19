@@ -1,0 +1,8 @@
+li { id="comment_#{comment.id}" }
+  .row.small
+    .col-8
+      = comment.body
+    .col-2
+      = link_to 'Delete', question_comment_path(resource, comment), method: :delete, class: 'btn btn-outline-danger btn-sm', remote: true
+    .col-2.text-right
+      = comment.user.email
