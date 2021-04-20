@@ -4,6 +4,13 @@ div class = "answer-#{answer.id}"
   p = render 'shared/vote', resource: answer
   p = render 'attachments/attachments', resource: answer, edit_path: true
   p = render 'shared/link', resource: answer
+
+  .answer_comments
+    = render 'comments/comments', resource: answer
+    br
+    - if current_user
+      = render 'comments/form', resource: answer
+
   - if best
     = render 'rewards/reward', resource: answer.question.reward 
 

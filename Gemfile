@@ -36,6 +36,7 @@ gem 'cocoon'
 gem 'devise'
 gem 'gon'
 gem 'handlebars_assets'
+gem 'handlebars-source'
 gem 'jquery-rails'
 gem 'slim-rails'
 

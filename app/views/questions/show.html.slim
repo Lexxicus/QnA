@@ -17,10 +17,11 @@ p = question.body
     = link_to 'Edit question', edit_question_path(@question), class: 'btn btn-light'
     = link_to 'Delete question', question_path(@question), method: :delete, class: 'btn btn-danger'
 
-= render 'comments/comments', resource: question
-br
-- if current_user
-  = render 'comments/form', resource: question
+#question_comments
+  = render 'comments/comments', resource: question
+  br
+  - if current_user
+    = render 'comments/form', resource: question
 
 .answers
   = render 'answers/answers', best_answer: @best_answer, other_answers: @other_answers

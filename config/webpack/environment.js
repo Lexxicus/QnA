@@ -9,3 +9,9 @@ environment.plugins.prepend('Provide',
         jQuery: 'jquery/src/jquery'
     })
 )
+
+const HandlebarsLoader = {
+  test: /\.hbs$/,
+  loader: 'handlebars-loader'
+}
+environment.loaders.append('hbs', HandlebarsLoader)

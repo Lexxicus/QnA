@@ -2,6 +2,8 @@
 
 FactoryBot.define do
   factory :comment do
-    body { 'MyString' }
+    sequence(:body) { |n| "Comment#{n}" }
+    user
+    votable factory: :question
   end
 end
