@@ -1,5 +1,7 @@
-tr class="answer"
-  td = link_to question.title, question
-  td = question.body
-  td = image_tag url_for(question.reward.image), size: "30", alt: "#{question.reward.image.filename}" if question.reward.present?
-  td = question.rating
+.row
+  .col-1.small.border-right
+    = question.rating
+  .col-9
+    = link_to question.title, question_path(question)
+  .col-2.border-left.small
+    = image_tag url_for(question.reward.image), size: "30", alt: "#{question.reward.image.filename}" if question.reward.present?

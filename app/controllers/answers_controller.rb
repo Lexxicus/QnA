@@ -5,6 +5,7 @@ class AnswersController < ApplicationController
 
   before_action :authenticate_user!, except: %i[show]
   before_action :load_answers, only: %i[create update]
+  after_action :publish_answer, only: [:create]
 
   def show; end
 
@@ -40,6 +41,16 @@ class AnswersController < ApplicationController
   end
 
   private
+
+  def publish_answer
+    return if @answer.errors.any?
+
+    ActionCable.server.broadcast("questions/#{@answer.question_id}",
+                                 answer: @answer,
+                                 email: @answer.user.email,
+                                 created_at: @answer.created_at.strftime('%d.%m.%Y %H:%M:%S'),
+                                 links: @answer.links)
+  end
 
   def load_answers
     @best_answer ||= question.best_answer

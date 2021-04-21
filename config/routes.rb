@@ -19,6 +19,10 @@ Rails.application.routes.draw do
   resources :questions, concerns: [:voted] do
     resources :answers, concerns: [:voted], shallow: true do
       patch :mark_as_best, on: :member
+      resources :comments, only: %i[create destroy], defaults: { commentable: 'answer' }
     end
+    resources :comments, only: %i[create destroy], defaults: { commentable: 'question' }
   end
+
+  mount ActionCable.server => '/cable'
 end

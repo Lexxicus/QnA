@@ -1,14 +1,16 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-feature 'User can vote for any answer or question', %q{
+feature 'User can vote for any answer or question', "
   In order to mark question or answer
   As an authenticated user
   I'd like to be able to vote
-} do
+" do
   given!(:user) { create(:user) }
   given!(:another_user) { create(:user) }
   given!(:question) { create(:question, user: another_user) }
-  given(:answer) { create(:answer, question: question, user:another_user) }
+  given(:answer) { create(:answer, question: question, user: another_user) }
 
   describe 'Authorized user' do
     background do
@@ -25,7 +27,7 @@ feature 'User can vote for any answer or question', %q{
     scenario 'can vote down for question', js: true do
       click_on(id: "vote_down_#{question.class.name.downcase}_#{question.id}")
       sleep 1
-      expect(question.rating).to eq -1
+      expect(question.rating).to eq(-1)
     end
 
     scenario 'can cancel his vote' do

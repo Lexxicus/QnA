@@ -1,9 +1,4 @@
-p= link_to 'Ask question', new_question_path
+= link_to 'Ask question', new_question_path, class: 'btn btn-light'
 
-table
-  tr
-    th Title
-    th Body
-    th Reward
-    th Rating
-    = render @questions
+.questions
+  = render @questions

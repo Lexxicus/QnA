@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.shared_examples 'voted' do
   context 'POST #vote_up, #vote_down' do
     before { login(test_user) }

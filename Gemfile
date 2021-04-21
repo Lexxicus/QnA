@@ -34,6 +34,9 @@ gem 'bootsnap', '>= 1.4.2', require: false
 gem 'bootstrap'
 gem 'cocoon'
 gem 'devise'
+gem 'gon'
+gem 'handlebars_assets'
+gem 'handlebars-source'
 gem 'jquery-rails'
 gem 'slim-rails'
 

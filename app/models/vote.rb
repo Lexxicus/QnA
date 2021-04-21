@@ -5,6 +5,5 @@ class Vote < ApplicationRecord
   belongs_to :user, touch: true
 
   validates :user, presence: true, uniqueness: { scope: %i[votable_id votable_type] }
-  validates :vote, precense: true
-  
+  validates :vote, presence: true
 end
