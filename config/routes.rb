@@ -5,6 +5,9 @@ Rails.application.routes.draw do
 
   root to: 'questions#index'
 
+  get '/user/recieve_email', to: 'users#recieve_email', as: 'recieve_email'
+  post '/user/set_email', to: 'users#set_email', as: 'set_email'
+
   concern :voted do
     member do
       patch :vote_up

@@ -1,0 +1,12 @@
+.row
+  .col-6.mx-auto
+    .card
+      .card-header
+        h1 Enter your email address
+      .card-body
+        = form_for(@user, url: set_email_path) do |f|
+          .form-group
+            = f.label :email
+            = f.email_field :email, autofocus: true, autocomplete: 'email', class: 'form-control'
+          .form-group.text-center
+            = f.submit 'Confirm email', class: 'btn btn-primary'
