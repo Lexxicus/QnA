@@ -18,7 +18,8 @@ RSpec.describe CommentsController, type: :controller do
       end
 
       it 'created by current user' do
-        post :create, params: { comment: attributes_for(:comment), question_id: question, commentable: 'question' }, format: :js
+        post :create, params: { comment: attributes_for(:comment), question_id: question, commentable: 'question' },
+                      format: :js
 
         expect(assigns(:comment).user).to eq user
       end

@@ -38,6 +38,8 @@ gem 'gon'
 gem 'handlebars_assets'
 gem 'handlebars-source'
 gem 'jquery-rails'
+gem 'omniauth', '~> 1.9', '>= 1.9.1'
+gem 'omniauth-github'
 gem 'slim-rails'
 
 group :development, :test do
