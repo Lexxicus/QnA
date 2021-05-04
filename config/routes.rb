@@ -1,9 +1,12 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, controllers: { omniauth_callbacks: 'oauth_callbacks' }
 
   root to: 'questions#index'
+
+  get '/user/recieve_email', to: 'users#recieve_email', as: 'recieve_email'
+  post '/user/set_email', to: 'users#set_email', as: 'set_email'
 
   concern :voted do
     member do

@@ -38,6 +38,9 @@ gem 'gon'
 gem 'handlebars_assets'
 gem 'handlebars-source'
 gem 'jquery-rails'
+gem 'omniauth', '~> 1.9', '>= 1.9.1'
+gem 'omniauth-github'
+gem 'omniauth-vkontakte'
 gem 'slim-rails'
 
 group :development, :test do
@@ -53,6 +56,7 @@ group :development do
   gem 'listen', '~> 3.2'
   gem 'web-console', '>= 3.3.0'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
+  gem 'letter_opener'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
@@ -60,6 +64,7 @@ end
 group :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '>= 2.15'
+  gem 'capybara-email'
   gem 'rails-controller-testing'
   gem 'selenium-webdriver'
   # Easy installation and use of web drivers to run system tests with browsers
