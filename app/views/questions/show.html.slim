@@ -12,10 +12,11 @@ p = question.body
 
 = render 'shared/link', resource: question
 
-- if current_user&.author?(question)
+- if can? :update, question
   .text-left
     = link_to 'Edit question', edit_question_path(@question), class: 'btn btn-light'
-    = link_to 'Delete question', question_path(@question), method: :delete, class: 'btn btn-danger'
+    - if can? :destroy, question
+      = link_to 'Delete question', question_path(@question), method: :delete, class: 'btn btn-danger'
 
 #question_comments
   = render 'comments/comments', resource: question
@@ -29,6 +30,6 @@ p = question.body
 .answer-errors
   = render 'shared/errors', resource: @answer
 
--if user_signed_in?
+-if can? :create, Answer
   .new-answer
     = render 'answers/form'

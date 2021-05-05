@@ -32,6 +32,7 @@ gem 'active_storage_validations'
 gem 'aws-sdk-s3'
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'bootstrap'
+gem 'cancancan'
 gem 'cocoon'
 gem 'devise'
 gem 'gon'

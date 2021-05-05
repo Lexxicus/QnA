@@ -5,6 +5,9 @@ class QuestionsController < ApplicationController
 
   before_action :authenticate_user!, except: %i[index show]
   after_action :publish_question, only: [:create]
+  helper_method :question
+
+  authorize_resource
 
   def index
     @questions = Question.all
@@ -42,12 +45,8 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    if current_user.author?(question)
-      question.destroy
-      redirect_to questions_path, notice: 'Your question successfully deleted!'
-    else
-      redirect_to question_path, error: 'You are not author of this answer'
-    end
+    question.destroy
+    redirect_to questions_path, notice: 'Your question successfully deleted!'
   end
 
   private
@@ -74,8 +73,6 @@ class QuestionsController < ApplicationController
   def question
     @question ||= params[:id] ? Question.with_attached_files.find(params[:id]) : Question.new
   end
-
-  helper_method :question
 
   def question_params
     params.require(:question).permit(:title,

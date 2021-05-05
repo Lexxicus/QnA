@@ -4,6 +4,6 @@
     em{ id="attachment_#{file.id}" }
       p
         = link_to file.filename.to_s, url_for(file)
-        - if current_user&.author?(resource)
+        - if can? :destroy, resource
           -if edit_path
             = link_to 'Delete file', attachment_path(file), remote: true, method: :delete, id: "delete-file-#{file.id}"

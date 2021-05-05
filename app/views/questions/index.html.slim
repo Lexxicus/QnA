@@ -1,4 +1,5 @@
-= link_to 'Ask question', new_question_path, class: 'btn btn-light'
+- if can?(:create, Question)
+  = link_to 'Ask question', new_question_path, class: 'btn btn-light'
 
 .questions
   = render @questions
