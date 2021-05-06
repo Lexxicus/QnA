@@ -7,6 +7,8 @@ class AnswersController < ApplicationController
   before_action :load_answers, only: %i[create update]
   after_action :publish_answer, only: [:create]
 
+  authorize_resource
+
   def show; end
 
   def new; end
@@ -21,22 +23,18 @@ class AnswersController < ApplicationController
   end
 
   def update
-    answer.update(answer_params) if current_user.author?(answer)
+    answer.update(answer_params)
   end
 
   def destroy
-    if current_user.author?(answer)
-      question.update!(best_answer: nil) if question.best_answer == answer
-      answer.destroy
-    else
-      redirect_to question_path, error: "You cant't delete someone else's answer"
-    end
+    question.update!(best_answer: nil) if question.best_answer == answer
+    answer.destroy
   end
 
   def mark_as_best
     answer
     @question = answer.question
-    @question.mark_as_best(answer) if current_user.author?(@question)
+    @question.mark_as_best(answer)
     load_answers
   end
 

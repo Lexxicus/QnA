@@ -144,11 +144,11 @@ RSpec.describe QuestionsController, type: :controller do
       end
     end
 
-    context 'not author' do
+    context 'non author' do
       before { login(user) }
       let!(:question) { create(:question) }
 
-      it 'not deletes the question' do
+      it 'can not delete the question' do
         expect { delete :destroy, params: { id: question } }.to_not change(Question, :count)
       end
     end
