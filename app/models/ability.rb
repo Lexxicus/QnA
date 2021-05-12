@@ -34,5 +34,6 @@ class Ability
       user.author?(file.record)
     end
     can :mark_as_best, Answer, question: { user_id: user.id }
+    can :me
   end
 end
