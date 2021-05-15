@@ -1,17 +1,14 @@
 # frozen_string_literal: true
 
-module Api
-  module V1
-    class ProfilesController < Api::V1::BaseController
-      def me
-        render json: current_resource_owner
-      end
+class Api::V1::ProfilesController < Api::V1::BaseController
+  authorize_resource class: User
 
-      private
+  def me
+    render json: current_resource_owner
+  end
 
-      def current_resource_owner
-        @current_resource_owner ||= User.find(doorkeeper_token.resource_owner_id) if doorkeeper_token
-      end
-    end
+  def index
+    @profiles = User.where.not(id: current_resource_owner.id)
+    render json: @profiles
   end
 end

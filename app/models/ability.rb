@@ -14,8 +14,12 @@ class Ability
     end
   end
 
+  private
+
   def guest_abilities
     can :read, :all
+    can :recieve_email, User
+    can :set_email, User
   end
 
   def admin_abilities
@@ -24,16 +28,25 @@ class Ability
 
   def user_abilities
     guest_abilities
+
+    can :me, User
+
+    can :index, User
+
     can :create, [Question, Answer, Comment]
+
     can :update, [Question, Answer], user_id: user.id
+
     can :destroy, [Question, Answer, Comment], user_id: user.id
+
     can %i[vote_up vote_down], [Question, Answer] do |votable|
       !user.author?(votable)
     end
+
     can :destroy, ActiveStorage::Attachment do |file|
       user.author?(file.record)
     end
+
     can :mark_as_best, Answer, question: { user_id: user.id }
-    can :me
   end
 end

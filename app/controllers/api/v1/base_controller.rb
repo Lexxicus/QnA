@@ -1,5 +1,17 @@
-class Api::V1::BaseController < ApplicationController
+# frozen_string_literal: true
+
+class Api::V1::BaseController < ActionController::Base
   before_action :doorkeeper_authorize!
+
+  rescue_from CanCan::AccessDenied do
+    head :forbidden
+  end
+
+  protected
+
+  def current_ability
+    @ability ||= Ability.new(current_resource_owner)
+  end
 
   private
 

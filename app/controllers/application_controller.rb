@@ -7,5 +7,5 @@ class ApplicationController < ActionController::Base
     format.json { render json: exception.message, status: :forbidden }
   end
 
-  check_authorization unless :devise_controller?
+  load_and_authorize_resource unless: :devise_controller?
 end

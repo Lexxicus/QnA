@@ -72,10 +72,6 @@ RSpec.describe FindForOauthService do
       it 'creates new empty user' do
         expect { subject.call }.to_not change(User, :count)
       end
-
-      it 'returns new user' do
-        expect(subject.call).to be_a(User)
-      end
     end
   end
 end
