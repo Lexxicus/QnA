@@ -5,9 +5,9 @@ class Question < ApplicationRecord
   include Votable
   include Commentable
 
-  has_many :answers, dependent: :destroy
+  has_many :answers, dependent: :nullify
   has_one :reward, dependent: :destroy
-  belongs_to :best_answer, class_name: 'Answer', optional: true
+  belongs_to :best_answer, class_name: 'Answer', optional: true, dependent: :destroy
   belongs_to :user
 
   has_many_attached :files

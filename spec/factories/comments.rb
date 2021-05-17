@@ -4,6 +4,7 @@ FactoryBot.define do
   factory :comment do
     sequence(:body) { |n| "Comment#{n}" }
     user
-    commnetable factory: :question
+    commentable_id { nil }
+    commentable_type { nil }
   end
 end
