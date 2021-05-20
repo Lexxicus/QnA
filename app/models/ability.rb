@@ -33,11 +33,11 @@ class Ability
 
     can :index, User
 
-    can :create, [Question, Answer, Comment]
+    can :create, [Question, Answer, Comment, Subscription]
 
     can :update, [Question, Answer], user_id: user.id
 
-    can :destroy, [Question, Answer, Comment], user_id: user.id
+    can :destroy, [Question, Answer, Comment, Subscription], user_id: user.id
 
     can %i[vote_up vote_down], [Question, Answer] do |votable|
       !user.author?(votable)

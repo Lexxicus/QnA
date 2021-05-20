@@ -1,0 +1,7 @@
+h1 Daily digest of the question
+ul
+  - @questions.each do |question|
+    li
+      = link_to question.title, url_for(question)
+      ' Author:
+      = question.user.email 

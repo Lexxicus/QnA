@@ -4,9 +4,9 @@ p = question.body
 = render 'shared/vote', resource: question
 
 .col-md-2.span.small
-  - if @question.reward
+  - if question.reward
       .small.text-center Reward for best answer:
-      = render 'rewards/reward', resource: @question.reward
+      = render 'rewards/reward', resource: question.reward
 
 = render 'attachments/attachments', resource: question, edit_path: false
 
@@ -17,6 +17,10 @@ p = question.body
     = link_to 'Edit question', edit_question_path(@question), class: 'btn btn-light'
     - if can? :destroy, question
       = link_to 'Delete question', question_path(@question), method: :delete, class: 'btn btn-danger'
+
+.subscription
+  - if can? :create, Subscription
+    = render 'subscriptions/subscription', resource: question
 
 #question_comments
   = render 'comments/comments', resource: question

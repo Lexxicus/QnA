@@ -20,6 +20,8 @@ module QnA
 
     # config.autoload_paths += [config.root.join('app')]
 
+    config.active_job.queue_adapter = :sidekiq
+
     config.generators do |g|
       g.test_framework :rspec,
                        controller_specs: true,

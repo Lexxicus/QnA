@@ -1,0 +1,7 @@
+h1 Daily digest of the question
+ul
+  - @questions.each do |question|
+    li
+      = question.title
+      ' Author:
+      = question.user.email 

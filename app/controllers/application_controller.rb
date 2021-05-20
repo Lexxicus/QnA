@@ -2,10 +2,10 @@
 
 class ApplicationController < ActionController::Base
   rescue_from CanCan::AccessDenied do |exception|
-    format.html { redirect_to root_url, alert: exception.message }
-    format.js { render status: :forbidden }
-    format.json { render json: exception.message, status: :forbidden }
+    respond_to do |format|
+      format.json { head :forbidden, content_type: 'text/html' }
+      format.html { redirect_to main_app.root_url, alert: exception.message }
+      format.js   { head :forbidden, content_type: 'text/html' }
+    end
   end
-
-  load_and_authorize_resource unless: :devise_controller?
 end

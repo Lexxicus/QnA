@@ -6,6 +6,7 @@ class AnswersController < ApplicationController
   before_action :authenticate_user!, except: %i[show]
   before_action :load_answers, only: %i[create update]
   after_action :publish_answer, only: [:create]
+  helper_method :answer, :question
 
   def show; end
 
@@ -60,8 +61,6 @@ class AnswersController < ApplicationController
   def question
     @question ||= params[:question_id] ? Question.find(params[:question_id]) : answer.question
   end
-
-  helper_method :answer, :question
 
   def answer_params
     params.require(:answer).permit(:body,

@@ -8,6 +8,7 @@ RSpec.describe Question, type: :model do
   it { should have_many(:links).dependent(:destroy) }
   it { should have_many(:votes).dependent(:destroy) }
   it { should have_many(:comments).dependent(:destroy) }
+  it { should have_many(:subscriptions).dependent(:destroy) }
 
   it { should validate_presence_of :title }
   it { should validate_presence_of :body }
@@ -23,5 +24,14 @@ RSpec.describe Question, type: :model do
     let(:user) { create(:user) }
     let!(:another_user) { create(:user) }
     let(:model) { create(:question, user: another_user) }
+  end
+
+  describe 'reputation ReputationJob' do
+    let(:question) { build(:question) }
+
+    it 'calls ReputationJob' do
+      expect(ReputationJob).to receive(:perform_later).with(question)
+      question.save!
+    end
   end
 end
