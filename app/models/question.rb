@@ -5,7 +5,10 @@ class Question < ApplicationRecord
   include Votable
   include Commentable
 
+  after_create :calculate_reputation
+
   has_many :answers, dependent: :nullify
+  has_many :subscriptions, dependent: :destroy
   has_one :reward, dependent: :destroy
   belongs_to :best_answer, class_name: 'Answer', optional: true, dependent: :destroy
   belongs_to :user
@@ -16,6 +19,8 @@ class Question < ApplicationRecord
 
   validates :title, :body, presence: true
 
+  after_create :create_subscription
+
   def mark_as_best(answer)
     transaction do
       update!(best_answer: answer)
@@ -25,5 +30,15 @@ class Question < ApplicationRecord
 
   def other_answers
     answers.where.not(id: best_answer_id)
+  end
+
+  private
+
+  def create_subscription
+    subscriptions.create!(user: user)
+  end
+
+  def calculate_reputation
+    ReputationJob.perform_later(self)
   end
 end

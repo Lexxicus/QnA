@@ -4,6 +4,7 @@ class QuestionsController < ApplicationController
   include Voted
 
   before_action :authenticate_user!, except: %i[index show]
+  before_action :set_subscription, only: %i[show update]
   after_action :publish_question, only: [:create]
   helper_method :question
 
@@ -70,6 +71,10 @@ class QuestionsController < ApplicationController
 
   def question
     @question ||= params[:id] ? Question.with_attached_files.find(params[:id]) : Question.new
+  end
+
+  def set_subscription
+    @subscription ||= current_user&.subscriptions&.find_by(question: question)
   end
 
   def question_params
