@@ -41,6 +41,7 @@ gem 'gon'
 gem 'handlebars_assets'
 gem 'handlebars-source'
 gem 'jquery-rails'
+gem 'mysql2'
 gem 'oj'
 gem 'omniauth', '~> 1.9', '>= 1.9.1'
 gem 'omniauth-github'
@@ -48,6 +49,7 @@ gem 'omniauth-vkontakte'
 gem 'sidekiq'
 gem 'sinatra', require: false
 gem 'slim-rails'
+gem 'thinking-sphinx'
 gem 'whenever', require: false
 
 group :development, :test do
