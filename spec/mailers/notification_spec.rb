@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe NotificationMailer, type: :mailer do
@@ -13,7 +15,7 @@ RSpec.describe NotificationMailer, type: :mailer do
       expect(mail.from).to eq(['from@example.com'])
     end
 
-    it "renders the body" do
+    it 'renders the body' do
       expect(mail.body.encoded).to have_content('New answer on your question:')
     end
   end

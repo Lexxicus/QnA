@@ -20,6 +20,7 @@ class Ability
     can :read, :all
     can :recieve_email, User
     can :set_email, User
+    can :search, :all
   end
 
   def admin_abilities

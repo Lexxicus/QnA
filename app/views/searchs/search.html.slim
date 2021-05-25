@@ -1,0 +1,29 @@
+card
+  .card-header
+    .card-title.text-center
+      h1 Search result
+  .card-body
+    - if @search_results.empty?
+      span The search has not given any results
+    - else
+      ul
+      - @search_results.each do |item|
+        .row
+          .col-10
+            li
+              - if item.is_a?(Question)
+                = link_to item.title.truncate(100), question_path(item)
+
+              - elsif item.is_a?(Answer)
+                = link_to item.body.truncate(100), "/questions/#{item.question.id}?#answer_#{item.id}"
+
+              - elsif item.is_a?(Comment) &&  item.commentable_type == "Question"
+                = link_to item.body.truncate(100), "/questions/#{item.commentable_id}?#comment_#{item.id}"
+
+              - elsif item.is_a?(Comment)&& item.commentable_type == "Answer"
+                = link_to item.body.truncate(100), "/questions/#{item.commentable.question_id}?#comment_#{item.id}"
+
+              - else item.is_a?(User)
+                = item.email
+                |
+                span.small= item.created_at
