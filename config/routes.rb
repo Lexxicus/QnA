@@ -3,7 +3,7 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
-  authenticate :user, lambda { |u| u.admin? } do
+  authenticate :user, ->(u) { u.admin? } do
     mount Sidekiq::Web => '/sidekiq'
   end
 
@@ -14,6 +14,7 @@ Rails.application.routes.draw do
 
   get '/user/recieve_email', to: 'users#recieve_email', as: 'recieve_email'
   post '/user/set_email', to: 'users#set_email', as: 'set_email'
+  get '/search', to: 'searchs#search'
 
   concern :voted do
     member do

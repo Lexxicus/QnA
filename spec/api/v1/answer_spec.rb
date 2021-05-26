@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 describe 'Answers API', type: :request do
-  let(:headers) { { "ACCEPT" => 'application/json' } }
+  let(:headers) { { 'ACCEPT' => 'application/json' } }
   let(:user) { create(:user) }
   let(:access_token) { create(:access_token, resource_owner_id: user.id) }
 
@@ -21,7 +23,7 @@ describe 'Answers API', type: :request do
 
       before { get api_path, params: { access_token: access_token.token }, headers: headers }
 
-      it_behaves_like "Request successful"
+      it_behaves_like 'Request successful'
 
       it 'returns list of questions' do
         expect(json['answers'].size).to eq 3
