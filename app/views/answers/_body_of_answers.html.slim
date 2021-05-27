@@ -1,26 +1,33 @@
 div class = "answer-#{answer.id}"
-  p = answer.body
-
-  p = render 'shared/vote', resource: answer
-  p = render 'attachments/attachments', resource: answer, edit_path: true
-  p = render 'shared/link', resource: answer
-
-  .answer_comments
-    = render 'comments/comments', resource: answer
-    br
-    - if can? :create, Comment
-      = render 'comments/form', resource: answer
+  li.list-group-item
+    .row
+      .col-2.border-right
+        = render 'shared/vote', resource: answer
+      .col-10
+        = answer.body
+        ul
+          = render 'attachments/attachments', resource: answer, edit_path: true
+          = render 'shared/link', resource: answer
+  .row
+      .col-2
+      .col-10
+        hr
+        .answer_comments
+          = render 'comments/comments', resource: answer
+          br
+          - if can? :create, Comment
+            = render 'comments/form', resource: answer
 
   - if best
     = render 'rewards/reward', resource: answer.question.reward 
 
   - if current_user&.author?(answer.question) && @question.best_answer != answer
-    = link_to 'Best', mark_as_best_answer_path(answer), id: "best_#{answer.id}", method: :patch, remote: true
+    = link_to 'Best', mark_as_best_answer_path(answer), id: "best_#{answer.id}",class: 'btn btn-outline-success btn-sm', method: :patch, remote: true
   
   - if can? :update, answer
     = link_to 'Edit', '#', class: 'btn btn-outline-warning btn-sm edit-answer-link', data: { answer_id: answer.id}
-    br
     = link_to 'Delete answer', answer_path(answer), method: :delete, class: 'btn btn-outline-danger btn-sm', remote: true
+    br
 
     = form_with model: answer, local: false, class: 'hidden', html: {id: "edit-answer-#{answer.id}"} do |f|
       p 

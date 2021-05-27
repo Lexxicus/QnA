@@ -1,39 +1,54 @@
-h2 = question.title
-p = question.body
+.card-header
+  .card-title
+    .row
+      .col-md-8
+        .small.text-left Title:
+        = question.title
+        .small.text-left Author:
+        = question.user.email
+            
+      .col-md-2.span.small
+        - if question.reward
+          .small.text-center Reward for best answer:
+        = render 'rewards/reward', resource: question.reward
+      .col-md-1.span.small
+        .subscription
+          - if can? :create, Subscription
+              = render 'subscriptions/subscription', resource: question
 
-= render 'shared/vote', resource: question
+.card-body.bg-light
+  .row
+    .col-md-2.border-right
+      = render 'shared/vote', resource: question
+    .col-md-10
+      = question.body
+      = render 'attachments/attachments', resource: question, edit_path: false
+      = render 'shared/link', resource: question
 
-.col-md-2.span.small
-  - if question.reward
-      .small.text-center Reward for best answer:
-      = render 'rewards/reward', resource: question.reward
+  .row
+    .col-md-10      
+      - if can? :update, question
+        .text-left
+          br
+          = link_to 'Edit question', edit_question_path(@question), class: 'btn btn-sm btn-outline-warning edit_question'
+          - if can? :destroy, question
+            = link_to 'Delete question', question_path(@question), method: :delete, class: 'btn btn-sm btn-outline-danger', data: { confirm: 'Are you sure?'}
 
-= render 'attachments/attachments', resource: question, edit_path: false
-
-= render 'shared/link', resource: question
-
-- if can? :update, question
-  .text-left
-    = link_to 'Edit question', edit_question_path(@question), class: 'btn btn-light'
-    - if can? :destroy, question
-      = link_to 'Delete question', question_path(@question), method: :delete, class: 'btn btn-danger'
-
-.subscription
-  - if can? :create, Subscription
-    = render 'subscriptions/subscription', resource: question
-
-#question_comments
-  = render 'comments/comments', resource: question
-  br
-  - if current_user
-    = render 'comments/form', resource: question
+  #question_comments
+    = render 'comments/comments', resource: question
+    br
+    - if current_user
+      = render 'comments/form', resource: question
 
 .answers
-  = render 'answers/answers', best_answer: @best_answer, other_answers: @other_answers
+  h2 Answers:
+  .container.border.border-info.p-2.bg-light
+    = render 'answers/answers', best_answer: @best_answer, other_answers: @other_answers
 
-.answer-errors
-  = render 'shared/errors', resource: @answer
-
+    .answer-errors
+      = render 'shared/errors', resource: @answer
+div
+  br
 -if can? :create, Answer
-  .new-answer
-    = render 'answers/form'
+  .new-answer.container.border.border-info
+      = render 'answers/form'

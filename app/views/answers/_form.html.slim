@@ -1,14 +1,16 @@
 = form_with model: [question, @answer], data: { type: :json }, local: false  do |f|
-  p 
+  div 
     = f.label :body, 'Create your answer'
     = f.text_area :body, class: 'form-control'
-  p  
-    = f.label :files_new
-    = f.file_field :files, class: 'form-control-file',multiple: true
-  p Links
-  #links
-    = f.fields_for :links do |link|
-      = render 'shared/link_fields', f: link
-    .links
-      = link_to_add_association 'add link', f, :links, partial: 'shared/link_fields', class: 'btn btn-sm btn-success'
+  .row
+    hr
+    .col-6
+      = f.label :files_new
+      = f.file_field :files, class: 'form-control-file', multiple: true
+    .col-6  
+      p Links
+      #links
+        = f.fields_for :links do |link|
+        .links
+          = link_to_add_association 'add link', f, :links, partial: 'shared/link_fields', class: 'btn btn-outline-success btn-sm'
   p = f.submit 'Send answer'

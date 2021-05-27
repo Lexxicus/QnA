@@ -1,4 +1,5 @@
 - if current_user&.subscribed?(resource)
-  = link_to 'Unsubscribe', subscription_path(@subscription), method: :delete, remote: true, class: 'btn btn-sm btn-outline-danger'
+  .text-left
+    = link_to 'Unsubscribe', subscription_path(@subscription), method: :delete, remote: true, class: 'btn btn-sm btn-outline-danger'
 - else
   = link_to 'Subscribe', question_subscriptions_path(resource), method: :post, remote: true, class: 'btn btn-sm btn-outline-success'
