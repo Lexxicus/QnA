@@ -35,12 +35,14 @@ gem 'bootsnap', '>= 1.4.2', require: false
 gem 'bootstrap'
 gem 'cancancan'
 gem 'cocoon'
+gem 'dotenv-rails'
 gem 'devise'
 gem 'doorkeeper'
 gem 'gon'
 gem 'handlebars_assets'
 gem 'handlebars-source'
 gem 'jquery-rails'
+gem 'mini_racer'
 gem 'mysql2'
 gem 'oj'
 gem 'omniauth', '~> 1.9', '>= 1.9.1'
@@ -55,8 +57,14 @@ gem 'whenever', require: false
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  gem 'capistrano', require: false
+  gem 'capistrano-bundler', require: false
+  gem 'capistrano-rails', require: false
+  gem 'capistrano-rvm', require: false
+  gem 'capistrano-rbenv', require: false
+  gem 'capistrano-rbenv-install', require: false
+  gem 'capistrano-passenger', require: false
   gem 'database_cleaner-active_record'
-  gem 'dotenv-rails'
   gem 'factory_bot_rails'
   gem 'rspec-rails', '~> 4.0.2'
 end
