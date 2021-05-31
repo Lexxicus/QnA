@@ -48,7 +48,7 @@ gem 'oj'
 gem 'omniauth', '~> 1.9', '>= 1.9.1'
 gem 'omniauth-github'
 gem 'omniauth-vkontakte'
-gem 'sidekiq'
+gem 'sidekiq', '< 6'
 gem 'sinatra', require: false
 gem 'slim-rails'
 gem 'thinking-sphinx'
@@ -64,6 +64,7 @@ group :development, :test do
   gem 'capistrano-rbenv', require: false
   gem 'capistrano-rbenv-install', require: false
   gem 'capistrano-passenger', require: false
+  gem 'capistrano-sidekiq', require: false
   gem 'database_cleaner-active_record'
   gem 'factory_bot_rails'
   gem 'rspec-rails', '~> 4.0.2'
