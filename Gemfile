@@ -52,6 +52,7 @@ gem 'sidekiq', '< 6'
 gem 'sinatra', require: false
 gem 'slim-rails'
 gem 'thinking-sphinx'
+gem 'unicorn'
 gem 'whenever', require: false
 
 group :development, :test do
@@ -76,6 +77,7 @@ group :development do
   gem 'capistrano-rails', require: false
   gem 'capistrano-rvm', require: false
   gem 'capistrano-sidekiq', require: false
+  gem 'capistrano3-unicorn', require: false
 end
 
 group :test do

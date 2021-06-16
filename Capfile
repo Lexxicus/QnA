@@ -5,10 +5,11 @@ require "capistrano/setup"
 require "capistrano/deploy"
 require "capistrano/bundler"
 require "capistrano/rails"
-require "capistrano/passenger"
+# require "capistrano/passenger"
 require "capistrano/rvm"
 require "thinking_sphinx/capistrano"
 require "whenever/capistrano"
+require "capistrano3/unicorn"
 
 # Load the SCM plugin appropriate to your project:
 #
@@ -23,7 +24,7 @@ install_plugin Capistrano::SCM::Git
 
 require "capistrano/sidekiq"
 install_plugin Capistrano::Sidekiq
-install_plugin Capistrano::Sidekiq::Systemd 
+install_plugin Capistrano::Sidekiq::Systemd
 
 # Include tasks from other gems included in your Gemfile
 #
