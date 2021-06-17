@@ -1,20 +1,21 @@
-span.text-center  Rating:
-div
-  -if !current_user&.author?(resource) && current_user
-    span class="rating_buttons_#{resource.name_id}"
-      = link_to polymorphic_path(resource, action: :vote_up),
-                method: :patch,
-                remote: true,
-                class: 'rating-link',
-                id: "vote_up_#{resource.class.name.downcase}_#{resource.id}" do
-                  i.fas.fa-caret-up
-  span id="rating_#{resource.name_id}" title='Tap once again to cancel vote'
-    = resource.rating
-  -if !current_user&.author?(resource) && current_user
-    span class="rating_buttons_#{resource.name_id}"
-      = link_to polymorphic_path(resource, action: :vote_down),
-                method: :patch,
-                remote: true,
-                class: 'rating-link',
-                id: "vote_down_#{resource.class.name.downcase}_#{resource.id}"  do
-                  i.fas.fa-caret-down
+- cache resource
+  span.text-center  Rating:
+  div
+    -if !current_user&.author?(resource) && current_user
+      span class="rating_buttons_#{resource.name_id}"
+        = link_to polymorphic_path(resource, action: :vote_up),
+                  method: :patch,
+                  remote: true,
+                  class: 'rating-link',
+                  id: "vote_up_#{resource.class.name.downcase}_#{resource.id}" do
+                    i.fas.fa-caret-up
+    span id="rating_#{resource.name_id}" title='Tap once again to cancel vote'
+      = resource.rating
+    -if !current_user&.author?(resource) && current_user
+      span class="rating_buttons_#{resource.name_id}"
+        = link_to polymorphic_path(resource, action: :vote_down),
+                  method: :patch,
+                  remote: true,
+                  class: 'rating-link',
+                  id: "vote_down_#{resource.class.name.downcase}_#{resource.id}"  do
+                    i.fas.fa-caret-down

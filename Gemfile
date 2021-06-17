@@ -48,6 +48,7 @@ gem 'oj'
 gem 'omniauth', '~> 1.9', '>= 1.9.1'
 gem 'omniauth-github'
 gem 'omniauth-vkontakte'
+gem 'redis-rails'
 gem 'sidekiq', '< 6'
 gem 'sinatra', require: false
 gem 'slim-rails'

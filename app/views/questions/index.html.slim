@@ -1,5 +1,5 @@
 - if can?(:create, Question)
   = link_to 'Ask question', new_question_path, class: 'btn btn-light'
-
-.questions
-  = render @questions
+- cache collection_cache_key_for(Question) do
+  .questions
+    = render @questions

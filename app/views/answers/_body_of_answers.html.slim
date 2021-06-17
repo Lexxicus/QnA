@@ -3,11 +3,12 @@ div class = "answer-#{answer.id}"
     .row
       .col-2.border-right
         = render 'shared/vote', resource: answer
-      .col-10
-        = answer.body
-        ul
-          = render 'attachments/attachments', resource: answer, edit_path: true
-          = render 'shared/link', resource: answer
+      - cache ['body_for', answer] do
+        .col-10
+          = answer.body
+          ul
+            = render 'attachments/attachments', resource: answer, edit_path: true
+            = render 'shared/link', resource: answer
   .row
       .col-2
       .col-10
@@ -16,7 +17,7 @@ div class = "answer-#{answer.id}"
           = render 'comments/comments', resource: answer
           br
           - if can? :create, Comment
-            = render 'comments/form', resource: answer
+              = render 'comments/form', resource: answer
 
   - if best
     = render 'rewards/reward', resource: answer.question.reward 
@@ -25,19 +26,20 @@ div class = "answer-#{answer.id}"
     = link_to 'Best', mark_as_best_answer_path(answer), id: "best_#{answer.id}",class: 'btn btn-outline-success btn-sm', method: :patch, remote: true
   
   - if can? :update, answer
-    = link_to 'Edit', '#', class: 'btn btn-outline-warning btn-sm edit-answer-link', data: { answer_id: answer.id}
-    = link_to 'Delete answer', answer_path(answer), method: :delete, class: 'btn btn-outline-danger btn-sm', remote: true
-    br
+    - cache ['edit_form_for', answer] do
+      = link_to 'Edit', '#', class: 'btn btn-outline-warning btn-sm edit-answer-link', data: { answer_id: answer.id}
+      = link_to 'Delete answer', answer_path(answer), method: :delete, class: 'btn btn-outline-danger btn-sm', remote: true
+      br
 
-    = form_with model: answer, local: false, class: 'hidden', html: {id: "edit-answer-#{answer.id}"} do |f|
-      p 
-        = f.label :body, 'Your answer'
-        = f.text_area :body, class: 'form-control'
-      p  
-        = f.label :files
-        = f.file_field :files, class: 'form-control-file',multiple: true
-      p Links :
-      .links
-        = link_to_add_association 'add link', f, :links, partial: 'shared/link_fields', class: 'btn btn-sm btn-success'
-      
-      p = f.submit 'Save'
+      = form_with model: answer, local: false, class: 'hidden', html: {id: "edit-answer-#{answer.id}"} do |f|
+        p 
+          = f.label :body, 'Your answer'
+          = f.text_area :body, class: 'form-control'
+        p  
+          = f.label :files
+          = f.file_field :files, class: 'form-control-file',multiple: true
+        p Links :
+        .links
+          = link_to_add_association 'add link', f, :links, partial: 'shared/link_fields', class: 'btn btn-sm btn-success'
+        
+        p = f.submit 'Save'
