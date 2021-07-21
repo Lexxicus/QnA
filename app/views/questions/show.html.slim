@@ -1,29 +1,31 @@
 .card-header
   .card-title
     .row
-      .col-md-8
-        .small.text-left Title:
-        = question.title
-        .small.text-left Author:
-        = question.user.email
-            
-      .col-md-2.span.small
-        - if question.reward
-          .small.text-center Reward for best answer:
-        = render 'rewards/reward', resource: question.reward
+      - cache ['title_for', question] do
+        .col-md-8
+          .small.text-left Title:
+          = question.title
+          .small.text-left Author:
+          = question.user.email
+              
+        .col-md-2.span.small
+          - if question.reward
+            .small.text-center Reward for best answer:
+          = render 'rewards/reward', resource: question.reward
       .col-md-1.span.small
         .subscription
           - if can? :create, Subscription
               = render 'subscriptions/subscription', resource: question
 
 .card-body.bg-light
-  .row
-    .col-md-2.border-right
-      = render 'shared/vote', resource: question
-    .col-md-10
-      = question.body
-      = render 'attachments/attachments', resource: question, edit_path: false
-      = render 'shared/link', resource: question
+  - cache ['body_for', question] do
+    .row
+      .col-md-2.border-right
+        = render 'shared/vote', resource: question
+      .col-md-10
+        = question.body
+        = render 'attachments/attachments', resource: question, edit_path: false
+        = render 'shared/link', resource: question
 
   .row
     .col-md-10      
@@ -50,5 +52,6 @@
 div
   br
 -if can? :create, Answer
-  .new-answer.container.border.border-info
-      = render 'answers/form'
+  - cache ['answer_for', question] do
+    .new-answer.container.border.border-info
+        = render 'answers/form'

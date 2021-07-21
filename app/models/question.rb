@@ -11,7 +11,7 @@ class Question < ApplicationRecord
   has_many :subscriptions, dependent: :destroy
   has_one :reward, dependent: :destroy
   belongs_to :best_answer, class_name: 'Answer', optional: true, dependent: :destroy
-  belongs_to :user
+  belongs_to :user, touch: true
 
   has_many_attached :files
 
